@@ -16,6 +16,12 @@ function attachEvents() {
 
         currentWeatherDivElement.innerHTML = `<div class="label">Current conditions</div>`;
         upcomingWeatherDivElement.innerHTML = `<div class="label">Three-day forecast</div>`;
+        const pElementToRemove = document.querySelector('#forecast p');
+        if (pElementToRemove) {
+            
+            pElementToRemove.remove();
+
+        }
 
         if (locationInput.value) {
 
@@ -134,7 +140,16 @@ function attachEvents() {
             } catch {
 
                 forecastDivElement.style.display = 'inline';
-                forecastDivElement.textContent = `Error`;
+                const labels = Array.from(document.querySelectorAll('.label'));
+                labels.forEach(label => {
+
+                    label.style.display = 'none';
+
+                })
+
+                const pElement = document.createElement('p');
+                pElement.textContent = `Error`;
+                forecastDivElement.appendChild(pElement);
 
             }
 
