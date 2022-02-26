@@ -37,7 +37,7 @@ function attachEvents() {
                 const upcomingWeatherResponse = await fetch(upcomingWeatherEndpoint);
                 const upcomingWeatherResult = await upcomingWeatherResponse.json();
 
-                forecastDivElement.style.display = 'block';
+                forecastDivElement.style.display = 'inline';
 
                 const forecastCurrentDivElement = document.createElement('div');
                 forecastCurrentDivElement.classList.add('forecasts');
@@ -49,19 +49,19 @@ function attachEvents() {
 
                 switch (currentWeatherResult.forecast.condition) {
                     case 'Sunny':
-                        spanSymbolElement.innerHTML = `&#x2600;`;
+                        spanSymbolElement.innerHTML = `&#x2600`;
                         break;
                     case 'Partly sunny':
-                        spanSymbolElement.innerHTML = `&#x26C5;`;
+                        spanSymbolElement.innerHTML = `&#x26C5`;
                         break;
                     case 'Overcast':
-                        spanSymbolElement.innerHTML = `&#x2601;`;
+                        spanSymbolElement.innerHTML = `&#x2601`;
                         break;
                     case 'Rain':
-                        spanSymbolElement.innerHTML = `&#x2614;`;
+                        spanSymbolElement.innerHTML = `&#x2614`;
                         break;
                     case 'Degrees':
-                        spanSymbolElement.innerHTML = `&#176;`;
+                        spanSymbolElement.innerHTML = `&#176`;
                         break;
                 }
 
@@ -133,7 +133,7 @@ function attachEvents() {
 
             } catch {
 
-                forecastDivElement.style.display = 'block';
+                forecastDivElement.style.display = 'inline';
                 forecastDivElement.textContent = `Error`;
 
             }
