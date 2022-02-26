@@ -18,117 +18,126 @@ function attachEvents() {
         upcomingWeatherDivElement.innerHTML = `<div class="label">Three-day forecast</div>`;
 
         if (locationInput.value) {
-            
+
             const locationsEndpoint = `${baseUrl}/jsonstore/forecaster/locations`;
 
-            const locationsResponse = await fetch(locationsEndpoint);
-            const locationsResult = await locationsResponse.json();
+            try {
 
-            const specificLocation = locationsResult.find(loc => loc.code === locationInput.value.toLowerCase());
+                const locationsResponse = await fetch(locationsEndpoint);
+                const locationsResult = await locationsResponse.json();
 
-            const currentWeatherEndpoint = `${baseUrl}/jsonstore/forecaster/today/${specificLocation.code}`;
-            const upcomingWeatherEndpoint = `${baseUrl}/jsonstore/forecaster/upcoming/${specificLocation.code}`;
-            
-            const currentWeatherResponse = await fetch(currentWeatherEndpoint);
-            const currentWeatherResult = await currentWeatherResponse.json();
+                const specificLocation = locationsResult.find(loc => loc.code === locationInput.value.toLowerCase());
 
-            const upcomingWeatherResponse = await fetch(upcomingWeatherEndpoint);
-            const upcomingWeatherResult = await upcomingWeatherResponse.json();
+                const currentWeatherEndpoint = `${baseUrl}/jsonstore/forecaster/today/${specificLocation.code}`;
+                const upcomingWeatherEndpoint = `${baseUrl}/jsonstore/forecaster/upcoming/${specificLocation.code}`;
 
-            forecastDivElement.style.display = 'block';
-                
-            const forecastCurrentDivElement = document.createElement('div');
-            forecastCurrentDivElement.classList.add('forecasts');
-            currentWeatherDivElement.appendChild(forecastCurrentDivElement);
-            
-            const spanSymbolElement = document.createElement('span');
-            spanSymbolElement.classList.add('condition');
-            spanSymbolElement.classList.add('symbol');
+                const currentWeatherResponse = await fetch(currentWeatherEndpoint);
+                const currentWeatherResult = await currentWeatherResponse.json();
 
-            switch (currentWeatherResult.forecast.condition) {
-                case 'Sunny':
-                    spanSymbolElement.innerHTML = `&#x2600;`;
-                    break;
-                case 'Partly sunny':
-                    spanSymbolElement.innerHTML = `&#x26C5;`;
-                    break;
-                case 'Overcast':
-                    spanSymbolElement.innerHTML = `&#x2601;`;
-                    break;
-                case 'Rain':
-                    spanSymbolElement.innerHTML = `&#x2614;`;
-                    break;
-                case 'Degrees':
-                    spanSymbolElement.innerHTML = `&#176;`;
-                    break;
-            }
+                const upcomingWeatherResponse = await fetch(upcomingWeatherEndpoint);
+                const upcomingWeatherResult = await upcomingWeatherResponse.json();
 
-            forecastCurrentDivElement.appendChild(spanSymbolElement);
+                forecastDivElement.style.display = 'block';
 
-            const spanConditionElement = document.createElement('span');
-            spanConditionElement.classList.add('condition');
-            forecastCurrentDivElement.appendChild(spanConditionElement);
+                const forecastCurrentDivElement = document.createElement('div');
+                forecastCurrentDivElement.classList.add('forecasts');
+                currentWeatherDivElement.appendChild(forecastCurrentDivElement);
 
-            const spanLocationElement = document.createElement('span');
-            spanLocationElement.textContent = currentWeatherResult.name;
-            spanLocationElement.classList.add('forecast-data');
-            spanConditionElement.appendChild(spanLocationElement);
+                const spanSymbolElement = document.createElement('span');
+                spanSymbolElement.classList.add('condition');
+                spanSymbolElement.classList.add('symbol');
 
-            const spanTempElement = document.createElement('span');
-            spanTempElement.innerHTML = `${currentWeatherResult.forecast.low}&deg;/${currentWeatherResult.forecast.high}&deg;`;
-            spanTempElement.classList.add('forecast-data');
-            spanConditionElement.appendChild(spanTempElement);
-
-            const spanWordConditionElement = document.createElement('span');
-            spanWordConditionElement.textContent = `${currentWeatherResult.forecast.condition}`;
-            spanWordConditionElement.classList.add('forecast-data');
-            spanConditionElement.appendChild(spanWordConditionElement);
-
-            const forecastInfoUpcomingDivElement = document.createElement('div');
-            forecastInfoUpcomingDivElement.classList.add('forecast-info');
-            upcomingWeatherDivElement.appendChild(forecastInfoUpcomingDivElement);
-
-            upcomingWeatherResult.forecast.forEach(forecast => {
-            
-                const spanUpcomingElement = document.createElement('span');
-                spanUpcomingElement.classList.add('upcoming');
-                forecastInfoUpcomingDivElement.appendChild(spanUpcomingElement);
-
-                const spanUpcomingSymbolElement = document.createElement('span');
-                spanUpcomingSymbolElement.classList.add('symbol');
-
-                switch (forecast.condition) {
+                switch (currentWeatherResult.forecast.condition) {
                     case 'Sunny':
-                        spanUpcomingSymbolElement.innerHTML = `&#x2600;`;
+                        spanSymbolElement.innerHTML = `&#x2600;`;
                         break;
                     case 'Partly sunny':
-                        spanUpcomingSymbolElement.innerHTML = `&#x26C5;`;
+                        spanSymbolElement.innerHTML = `&#x26C5;`;
                         break;
                     case 'Overcast':
-                        spanUpcomingSymbolElement.innerHTML = `&#x2601;`;
+                        spanSymbolElement.innerHTML = `&#x2601;`;
                         break;
                     case 'Rain':
-                        spanUpcomingSymbolElement.innerHTML = `&#x2614;`;
+                        spanSymbolElement.innerHTML = `&#x2614;`;
                         break;
                     case 'Degrees':
-                        spanUpcomingSymbolElement.innerHTML = `&#176;`;
+                        spanSymbolElement.innerHTML = `&#176;`;
                         break;
                 }
 
-                spanUpcomingElement.appendChild(spanUpcomingSymbolElement);
+                forecastCurrentDivElement.appendChild(spanSymbolElement);
 
-                const spanUpcomingTempElement = document.createElement('span');
-                spanUpcomingTempElement.innerHTML = `${forecast.low}&deg;/${forecast.high}&deg;`;
-                spanUpcomingTempElement.classList.add('forecast-data');
-                spanUpcomingElement.appendChild(spanUpcomingTempElement);
+                const spanConditionElement = document.createElement('span');
+                spanConditionElement.classList.add('condition');
+                forecastCurrentDivElement.appendChild(spanConditionElement);
 
-                const spanUpcomingWordConditionElement = document.createElement('span');
-                spanUpcomingWordConditionElement.textContent = `${forecast.condition}`;
-                spanUpcomingWordConditionElement.classList.add('forecast-data');
-                spanUpcomingElement.appendChild(spanUpcomingWordConditionElement);
+                const spanLocationElement = document.createElement('span');
+                spanLocationElement.textContent = currentWeatherResult.name;
+                spanLocationElement.classList.add('forecast-data');
+                spanConditionElement.appendChild(spanLocationElement);
 
-            })
-        
+                const spanTempElement = document.createElement('span');
+                spanTempElement.innerHTML = `${currentWeatherResult.forecast.low}&deg;/${currentWeatherResult.forecast.high}&deg;`;
+                spanTempElement.classList.add('forecast-data');
+                spanConditionElement.appendChild(spanTempElement);
+
+                const spanWordConditionElement = document.createElement('span');
+                spanWordConditionElement.textContent = `${currentWeatherResult.forecast.condition}`;
+                spanWordConditionElement.classList.add('forecast-data');
+                spanConditionElement.appendChild(spanWordConditionElement);
+
+                const forecastInfoUpcomingDivElement = document.createElement('div');
+                forecastInfoUpcomingDivElement.classList.add('forecast-info');
+                upcomingWeatherDivElement.appendChild(forecastInfoUpcomingDivElement);
+
+                upcomingWeatherResult.forecast.forEach(forecast => {
+
+                    const spanUpcomingElement = document.createElement('span');
+                    spanUpcomingElement.classList.add('upcoming');
+                    forecastInfoUpcomingDivElement.appendChild(spanUpcomingElement);
+
+                    const spanUpcomingSymbolElement = document.createElement('span');
+                    spanUpcomingSymbolElement.classList.add('symbol');
+
+                    switch (forecast.condition) {
+                        case 'Sunny':
+                            spanUpcomingSymbolElement.innerHTML = `&#x2600;`;
+                            break;
+                        case 'Partly sunny':
+                            spanUpcomingSymbolElement.innerHTML = `&#x26C5;`;
+                            break;
+                        case 'Overcast':
+                            spanUpcomingSymbolElement.innerHTML = `&#x2601;`;
+                            break;
+                        case 'Rain':
+                            spanUpcomingSymbolElement.innerHTML = `&#x2614;`;
+                            break;
+                        case 'Degrees':
+                            spanUpcomingSymbolElement.innerHTML = `&#176;`;
+                            break;
+                    }
+
+                    spanUpcomingElement.appendChild(spanUpcomingSymbolElement);
+
+                    const spanUpcomingTempElement = document.createElement('span');
+                    spanUpcomingTempElement.innerHTML = `${forecast.low}&deg;/${forecast.high}&deg;`;
+                    spanUpcomingTempElement.classList.add('forecast-data');
+                    spanUpcomingElement.appendChild(spanUpcomingTempElement);
+
+                    const spanUpcomingWordConditionElement = document.createElement('span');
+                    spanUpcomingWordConditionElement.textContent = `${forecast.condition}`;
+                    spanUpcomingWordConditionElement.classList.add('forecast-data');
+                    spanUpcomingElement.appendChild(spanUpcomingWordConditionElement);
+
+                })
+
+            } catch {
+
+                forecastDivElement.style.display = 'block';
+                forecastDivElement.textContent = `Error`;
+
+            }
+
         }
 
     }
