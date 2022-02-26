@@ -2,6 +2,8 @@ window.onload = getInfo;
 
 function getInfo() {
 
+    const baseUrl = 'http://localhost:3030';
+
     const buttonElement = document.getElementById('submit');
     buttonElement.addEventListener('click', loadBusStopInfo);
 
@@ -18,7 +20,7 @@ function getInfo() {
             
             const busIdValue = busIdElement.value;
 
-            const endpoint = `http://localhost:3030/jsonstore/bus/businfo/${busIdValue}`;
+            const endpoint = `${baseUrl}/jsonstore/bus/businfo/${busIdValue}`;
 
             ulElement.innerHTML = '';
 
