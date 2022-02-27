@@ -30,7 +30,6 @@ function attachEvents() {
         const commentsResult = await commentsResponse.json();
 
         let asArr = Object.entries(commentsResult);
-        console.log(asArr);
         asArr = asArr.filter(([, value]) => value.postId === dropdownPostsMenu.value);
 
         for (const [key, value] of asArr) {
