@@ -40,6 +40,8 @@ function attachEvents() {
 
         ev.preventDefault();
 
+        textArea.textContent = '';
+
         const responseMessages = await fetch(endpoint);
         const resultMessages = await responseMessages.json();
 
