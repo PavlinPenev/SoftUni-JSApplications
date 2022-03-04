@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body >
+    <button id="load-books" onclick="utility.loadBooks()">LOAD ALL BOOKS</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+    </table>
+
+    <form id="form">
+        <h3>FORM</h3>
+        <label>TITLE</label>
+        <input type="text" name="title" placeholder="Title..." required>
+        <label>AUTHOR</label>
+        <input type="text" name="author" placeholder="Author..."required>
+        <button>Submit</button>
+    </form>
+    <form id="edit-form" class="form">
+        <h3>Edit FORM</h3>
+        <label>TITLE</label>
+        <input type="text" name="title" placeholder="Title..." required>
+        <label>AUTHOR</label>
+        <input type="text" name="author" placeholder="Author..." required>
+        <button>Save</button>
+    </form>
+    <script src="./app.js"></script>
+</body>
+</html>
+
+<!--Feel free to change/update/modify the HTML Structure-->
